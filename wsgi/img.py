@@ -21,6 +21,7 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 app.config['MONGO_HOST'] = os.getenv('OPENSHIFT_MONGODB_DB_HOST')
 app.config['MONGO_PORT'] = os.getenv('OPENSHIFT_MONGODB_DB_PORT')
+app.config['MONGO_DBNAME'] = 'python'
 app.config['MONGO_USERNAME'] = os.getenv('OPENSHIFT_MONGODB_DB_USERNAME')
 app.config['MONGO_PASSWORD'] = os.getenv('OPENSHIFT_MONGODB_DB_PASSWORD')
 app.config['MONGO_DBNAME'] = 'python'
@@ -64,8 +65,8 @@ class Dependencies(Resource):
             new=False
         )
         if update_result['ok'] != 1:
-            return 'Error while updating dependencies status!', 500
-        return 'Dependencies updated', 201
+            return {'msg': 'Error while updating dependencies status!'}, 500
+        return {'msg': 'Dependencies updated'}, 201
 
 
 api.add_resource(Dependencies, '/dependencies/update')
